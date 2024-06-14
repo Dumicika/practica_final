@@ -9,10 +9,10 @@
         <h2 class="text-white">Scrie-ne un mesaj</h2>
         <form action="{{ route('contact.store') }}" method="POST">
             @csrf
-            <input type="text" name="name" placeholder="Name" required>
-            <input type="email" name="email" placeholder="E-mail" required>
-            <input type="text" name="subject" placeholder="Subject" required>
-            <textarea name="message" placeholder="Message" rows="4" required></textarea>
+            <input type="text" name="name" placeholder="Name" required class="text-white">
+            <input type="email" name="email" placeholder="E-mail" required class="text-white">
+            <input type="text" name="subject" placeholder="Subject" required class="text-white">
+            <textarea name="message" placeholder="Message" rows="4" required class="text-white"></textarea>
             <button type="submit">Send Message<i class="fa-solid fa-arrow-right"></i></button>
         </form>
     </div>
