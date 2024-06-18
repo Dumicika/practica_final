@@ -35,8 +35,12 @@
                     </td>
                     <td>{{ $collection->likes }}</td>
                     <td>
-                        <a href="#" class="btn btn-warning">Edit</a>
-                        <a href="#" class="btn btn-danger">Delete</a>
+                        <form action="{{ route('collections.destroy', $collection) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                        
                     </td>
                 </tr>
             @empty

@@ -5,13 +5,15 @@ namespace App\Http\Controllers;
 use App\Models\Collection;
 use App\Models\Image;
 use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 
 class CollectionController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index():View
     {
         $collections = Collection::all();
         return view('collections.index', ['collections' => $collections]);
@@ -20,7 +22,7 @@ class CollectionController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create():View
     {
         return view('collections.create');
     }
@@ -28,7 +30,7 @@ class CollectionController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request):RedirectResponse
     {
         $collection = new Collection();
         $collection->name = $request->name;
@@ -66,16 +68,23 @@ class CollectionController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Collection $collection)
+    public function update(Request $request, Collection $collection):RedirectResponse
     {
-        //
+        $collection->update($request->all());
+
+        return redirect()->back()->with('success', 'Updated');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Collection $collection)
+    public function destroy(Collection $collection):RedirectResponse
     {
-        //
+        foreach ($collection->images as $image) {
+            $image->delete();
+        }
+        
+        $collection->delete();
+        return redirect()->back()->with('success', 'Deleted');
     }
 }
